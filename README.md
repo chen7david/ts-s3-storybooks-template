@@ -6,9 +6,9 @@
 
 ### Setup Instructions
 
-- Install node packages: `npm i`
-- Run vite: `npm run dev` (react project)
-- Run storybook: `npm run storybook`
+- Install node packages: `yarn install`
+- Run vite: `yarn dev` (react project)
+- Run storybook: `yarn storybook`
 
 ### Checklist
 
