@@ -22,15 +22,9 @@ interface Props {
   }
 }
 
-export const BlazeButton = (props: Props) => {
-  const { buttonProps, titleProps } = props
-
+export const BlazeButton = ({ buttonProps, titleProps, blazeButtonType = 'retail' }: Props) => {
   const addBlzButtonTypeClassName = (blazeButtonType?: TBlazeButtonType) => {
-    if (!blazeButtonType) {
-      return buttonProps.className
-    }
-
-    let buttonClassName = `blz-btn-${props.blazeButtonType} ${buttonProps.className || ''}`
+    let buttonClassName = `blz-btn-${blazeButtonType} ${buttonProps.className || ''}`
 
     if (buttonProps.type === 'ghost') {
       buttonClassName += ` ant-btn-background-ghost`
@@ -55,10 +49,10 @@ export const BlazeButton = (props: Props) => {
   ): JSX.Element => {
     return width <= widthBreakPoint ? (
       <Tooltip title={title} placement='bottom'>
-        <Button {...buttonProps} className={addBlzButtonTypeClassName(props.blazeButtonType)} />
+        <Button {...buttonProps} className={addBlzButtonTypeClassName(blazeButtonType)} />
       </Tooltip>
     ) : (
-      <Button {...buttonProps} className={addBlzButtonTypeClassName(props.blazeButtonType)}>
+      <Button {...buttonProps} className={addBlzButtonTypeClassName(blazeButtonType)}>
         {title}
       </Button>
     )
@@ -69,7 +63,7 @@ export const BlazeButton = (props: Props) => {
       {titleProps && titleProps.widthBreakPoint ? (
         renderButtonWithBreakPoint(titleProps.title, titleProps.widthBreakPoint)
       ) : (
-        <Button {...buttonProps} className={addBlzButtonTypeClassName(props.blazeButtonType)}>
+        <Button {...buttonProps} className={addBlzButtonTypeClassName(blazeButtonType)}>
           {titleProps && titleProps.title}
         </Button>
       )}

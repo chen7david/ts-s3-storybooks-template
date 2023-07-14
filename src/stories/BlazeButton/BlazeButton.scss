@@ -13,7 +13,7 @@ button.ant-btn {
   @include stylize-blaze-button(blz-btn-black, $monoFf, $black, $blackAlt);
 
   // Default Ant Design buttons
-  @include stylize-blaze-button(ant-btn-primary, $monoFf, $retailAlt, $retail);
+//   @include stylize-blaze-button(ant-btn-primary, $monoFf, $retailAlt, $retail);
   @include stylize-blaze-button(ant-btn-danger, $monoFf, $danger, $dangerAlt);
 }
 

@@ -1,39 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.scss'
-import { Button } from 'antd'
-import { BlazeButton } from './stories/BlazeButton/BlazeButton'
-import { ThunderboltOutlined } from '@ant-design/icons'
+import { Row } from 'antd'
+import { BlazeButtons } from './stories/BlazeButton/BlazeButtons'
+import BlazeLogo from './images/blaze.png'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+      <div className='logo-container'>
+        <img src={BlazeLogo} className='logo-blaze' />
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <Button type='primary' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-      <BlazeButton
-        buttonProps={{ onClick: () => {}, icon: <ThunderboltOutlined /> }}
-        titleProps={{ title: 'Blaze Button', widthBreakPoint: 750 }}
-        blazeButtonType='retail'
-      />
+      <Row gutter={12}>
+        <BlazeButtons />
+      </Row>
     </>
   )
 }
