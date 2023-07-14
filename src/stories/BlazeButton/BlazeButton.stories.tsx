@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { MessageOutlined } from '@ant-design/icons'
+import * as React from 'react'
+// import type { Meta, StoryObj } from '@storybook/react'
+import { PlusOutlined } from '@ant-design/icons'
 
 import { BlazeButton, TBlazeButtonType } from './BlazeButton'
 import { Space } from 'antd'
@@ -15,9 +16,11 @@ const blztypes: TBlazeButtonType[] = [
   'danger',
   'black',
 ]
-const antBtnTypes = ['link', 'ghost', 'default', 'primary']
 
-const antBtnSizes = ['small', 'medium', 'large']
+type IAntBtnTypes = 'primary' | 'ghost' | 'dashed' | 'link' | 'text' | 'default' | undefined
+const antBtnTypes: IAntBtnTypes[] = ['primary', 'ghost', 'link', 'default']
+
+const antBtnSizes: SizeType[] = ['small', 'middle', 'large']
 
 interface IBlazeButtonStoryProps {
   buttonType: 'link' | 'ghost' | 'default' | 'primary'
@@ -28,11 +31,13 @@ interface IBlazeButtonStoryProps {
   widthBreakPoint: number
   blazeButtonType: TBlazeButtonType
   onClick: () => void
+  showIcon: boolean
 }
 
 const argTypes = {
   buttonProps: { table: { disable: true } },
   titleProps: { table: { disable: true } },
+  onClick: { table: { disable: true } },
   buttonType: {
     name: 'buttonProps.type',
     description: 'Ant Design Button prop: **type**',
@@ -50,7 +55,7 @@ const argTypes = {
     table: {
       defaultValue: { summary: 'false' },
       type: {
-        summary: ['true', 'false'],
+        summary: 'true|false',
       },
     },
     control: 'boolean',
@@ -61,7 +66,7 @@ const argTypes = {
     table: {
       defaultValue: { summary: 'false' },
       type: {
-        summary: ['true', 'false'],
+        summary: 'true|false',
       },
     },
     control: 'boolean',
@@ -70,13 +75,23 @@ const argTypes = {
     name: 'buttonProps.size',
     description: 'Ant Design Button prop: **size**',
     table: {
-      defaultValue: { summary: 'medium' },
+      defaultValue: { summary: 'middle' },
       type: {
         summary: antBtnSizes.join('|'),
       },
     },
     control: 'radio',
     options: antBtnSizes,
+  },
+  showIcon: {
+    name: 'buttonProps.icon',
+    description: 'Ant Design Button prop: **icon**',
+    table: {
+      type: {
+        summary: 'ReactNode',
+      },
+    },
+    control: 'boolean',
   },
   title: {
     name: 'titleProps.title',
@@ -98,13 +113,17 @@ const argDefault = {
   onClick: () => {
     alert('Blaze Button clicked')
   },
-  size: 'medium',
+  size: 'middle',
+  blazeButtonType: 'retail',
+  showIcon: false,
 }
+
+const IconExample = <PlusOutlined />
 
 export const BlazeButtonMeta = {
   name: 'Blaze Button',
   args: argDefault,
-  argTypes: { ...argTypes, blazeButtonType: 'retail' },
+  argTypes: argTypes,
   render: (args: IBlazeButtonStoryProps) => (
     <BlazeButton
       buttonProps={{
@@ -113,6 +132,7 @@ export const BlazeButtonMeta = {
         loading: args.loading,
         size: args.size,
         onClick: args.onClick,
+        icon: args.showIcon && IconExample,
       }}
       titleProps={{ title: args.title }}
       blazeButtonType={args.blazeButtonType}
@@ -121,7 +141,7 @@ export const BlazeButtonMeta = {
 }
 
 export const BlazeButtonTypes = {
-  args: argDefault,
+  args: { ...argDefault, title: '' },
   argTypes: { ...argTypes, blazeButtonType: { table: { disable: true } } },
   render: (args: IBlazeButtonStoryProps) => (
     <Space style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -133,14 +153,123 @@ export const BlazeButtonTypes = {
               type: args.buttonType,
               disabled: args.disabled,
               loading: args.loading,
+              size: args.size,
               onClick: args.onClick,
+              icon: args.showIcon && IconExample,
             }}
             blazeButtonType={blztype}
-            titleProps={{ title: `Blaze ${blztype} Button` }}
+            titleProps={{ title: args.title !== '' ? args.title : `Blaze ${blztype} Button` }}
           />
         )
       })}
     </Space>
+  ),
+}
+export const ButtonTypes = {
+  args: argDefault,
+  argTypes: { ...argTypes, buttonType: { table: { disable: true } } },
+  render: (args: IBlazeButtonStoryProps) => (
+    <Space style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {antBtnTypes.map((btnType, index) => {
+        return (
+          <BlazeButton
+            key={index}
+            buttonProps={{
+              type: btnType,
+              disabled: args.disabled,
+              loading: args.loading,
+              size: args.size,
+              onClick: args.onClick,
+              icon: args.showIcon && IconExample,
+            }}
+            blazeButtonType={args.blazeButtonType}
+            titleProps={{ title: `${btnType} Button` }}
+          />
+        )
+      })}
+    </Space>
+  ),
+}
+
+export const Size = {
+  args: argDefault,
+  argTypes: { ...argTypes, size: { table: { disable: true } } },
+  render: (args: IBlazeButtonStoryProps) => (
+    <Space style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {antBtnSizes.map((btnSize, index) => {
+        return (
+          <BlazeButton
+            key={index}
+            buttonProps={{
+              type: args.buttonType,
+              disabled: args.disabled,
+              loading: args.loading,
+              size: btnSize,
+              onClick: args.onClick,
+              icon: args.showIcon && IconExample,
+            }}
+            blazeButtonType={args.blazeButtonType}
+            titleProps={{ title: `${btnSize} Button` }}
+          />
+        )
+      })}
+    </Space>
+  ),
+}
+
+export const Loading = {
+  args: { ...argDefault, loading: true },
+  argTypes: { ...argTypes, loading: { table: { disable: true } } },
+  render: (args: IBlazeButtonStoryProps) => (
+    <BlazeButton
+      buttonProps={{
+        type: args.buttonType,
+        disabled: args.disabled,
+        loading: args.loading,
+        size: args.size,
+        onClick: args.onClick,
+        icon: args.showIcon && IconExample,
+      }}
+      blazeButtonType={args.blazeButtonType}
+      titleProps={{ title: args.title }}
+    />
+  ),
+}
+export const Disabled = {
+  args: { ...argDefault, disabled: true },
+  argTypes: { ...argTypes, disabled: { table: { disable: true } } },
+  render: (args: IBlazeButtonStoryProps) => (
+    <BlazeButton
+      buttonProps={{
+        type: args.buttonType,
+        disabled: args.disabled,
+        loading: args.loading,
+        size: args.size,
+        onClick: args.onClick,
+        icon: args.showIcon && IconExample,
+      }}
+      blazeButtonType={args.blazeButtonType}
+      titleProps={{ title: args.title }}
+    />
+  ),
+}
+
+export const ButtonWithIcon = {
+  args: { ...argDefault, showIcon: true },
+  argTypes: { ...argTypes, showIcon: { table: { disable: true } } },
+  render: (args: IBlazeButtonStoryProps) => (
+    <BlazeButton
+      buttonProps={{
+        type: args.buttonType,
+        disabled: args.disabled,
+        loading: args.loading,
+        size: args.size,
+        onClick: args.onClick,
+        icon: args.showIcon && IconExample,
+      }}
+      blazeButtonType={args.blazeButtonType}
+      titleProps={{ title: args.title }}
+    />
   ),
 }
 
