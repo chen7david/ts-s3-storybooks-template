@@ -1,5 +1,3 @@
-import * as React from 'react'
-// import type { Meta, StoryObj } from '@storybook/react'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { BlazeButton, TBlazeButtonType } from './BlazeButton'
@@ -32,6 +30,7 @@ interface IBlazeButtonStoryProps {
   blazeButtonType: TBlazeButtonType
   onClick: () => void
   showIcon: boolean
+  showBreakPoint: boolean
 }
 
 const argTypes = {
@@ -103,22 +102,34 @@ const argTypes = {
     },
     control: 'text',
   },
+  showBreakPoint: {
+    name: 'titleProps.widthBreakPoint',
+    description: 'Button width breakpoint',
+    table: {
+      type: {
+        summary: 'number',
+      },
+    },
+    control: 'boolean',
+  },
 }
 
 const argDefault = {
-  disabled: false,
+  blazeButtonType: 'retail',
   buttonType: 'primary',
+  disabled: false,
   loading: false,
-  title: 'Blaze button',
   onClick: () => {
     alert('Blaze Button clicked')
   },
-  size: 'middle',
-  blazeButtonType: 'retail',
   showIcon: false,
+  size: 'middle',
+  title: 'Blaze button',
+  showBreakPoint: false,
 }
 
 const IconExample = <PlusOutlined />
+const breakpointExample = 1400
 
 export const BlazeButtonMeta = {
   name: 'Blaze Button',
@@ -134,7 +145,10 @@ export const BlazeButtonMeta = {
         onClick: args.onClick,
         icon: args.showIcon && IconExample,
       }}
-      titleProps={{ title: args.title }}
+      titleProps={{
+        title: args.title,
+        widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+      }}
       blazeButtonType={args.blazeButtonType}
     />
   ),
@@ -158,7 +172,10 @@ export const BlazeButtonTypes = {
               icon: args.showIcon && IconExample,
             }}
             blazeButtonType={blztype}
-            titleProps={{ title: args.title !== '' ? args.title : `Blaze ${blztype} Button` }}
+            titleProps={{
+              title: args.title !== '' ? args.title : `Blaze ${blztype} Button`,
+              widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+            }}
           />
         )
       })}
@@ -183,7 +200,10 @@ export const ButtonTypes = {
               icon: args.showIcon && IconExample,
             }}
             blazeButtonType={args.blazeButtonType}
-            titleProps={{ title: `${btnType} Button` }}
+            titleProps={{
+              title: `${btnType} Button`,
+              widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+            }}
           />
         )
       })}
@@ -209,7 +229,10 @@ export const Size = {
               icon: args.showIcon && IconExample,
             }}
             blazeButtonType={args.blazeButtonType}
-            titleProps={{ title: `${btnSize} Button` }}
+            titleProps={{
+              title: `${btnSize} Button`,
+              widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+            }}
           />
         )
       })}
@@ -231,7 +254,10 @@ export const Loading = {
         icon: args.showIcon && IconExample,
       }}
       blazeButtonType={args.blazeButtonType}
-      titleProps={{ title: args.title }}
+      titleProps={{
+        title: args.title,
+        widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+      }}
     />
   ),
 }
@@ -249,7 +275,10 @@ export const Disabled = {
         icon: args.showIcon && IconExample,
       }}
       blazeButtonType={args.blazeButtonType}
-      titleProps={{ title: args.title }}
+      titleProps={{
+        title: args.title,
+        widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+      }}
     />
   ),
 }
@@ -268,7 +297,32 @@ export const ButtonWithIcon = {
         icon: args.showIcon && IconExample,
       }}
       blazeButtonType={args.blazeButtonType}
-      titleProps={{ title: args.title }}
+      titleProps={{
+        title: args.title,
+        widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+      }}
+    />
+  ),
+}
+
+export const ButtonWithBreakPoint = {
+  args: { ...argDefault, showIcon: true, showBreakPoint: true },
+  argTypes: { ...argTypes, showBreakPoint: { table: { disable: true } } },
+  render: (args: IBlazeButtonStoryProps) => (
+    <BlazeButton
+      buttonProps={{
+        type: args.buttonType,
+        disabled: args.disabled,
+        loading: args.loading,
+        size: args.size,
+        onClick: args.onClick,
+        icon: args.showIcon && IconExample,
+      }}
+      blazeButtonType={args.blazeButtonType}
+      titleProps={{
+        title: args.title,
+        widthBreakPoint: args.showBreakPoint ? breakpointExample : undefined,
+      }}
     />
   ),
 }
@@ -277,4 +331,5 @@ export default {
   title: 'Blaze Components/Blaze Button',
   component: BlazeButton,
   tags: ['autodocs'],
+  parameters: { controls: { sort: 'requiredFirst' } },
 }

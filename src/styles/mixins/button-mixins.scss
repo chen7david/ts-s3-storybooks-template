@@ -81,8 +81,8 @@
   }
 
   &.#{$property}.ant-btn-default {
-      @include button-colors($mono55, $monoFf, default);
-      border-color: $mono55 !important;
+      @include button-colors($mono77, $monoFf, default);
+      border-color: $mono77 !important;
 
     &:disabled, &:disabled:hover {
       @include disabled-button-style($background-color, transparent, default);
